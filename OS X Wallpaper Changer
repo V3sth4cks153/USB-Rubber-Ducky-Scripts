@@ -1,0 +1,51 @@
+REM Author: V3sth4cks153
+REM Title: OS X Wallpaper changer
+REM This script uses curl and osascript, which are both by default on Mac OS X, to download an image from the Internet, set it as wallpaper, and then delete the downloaded file and the Terminal history. 
+REM NOTE: You may have to change the delays a bit if you have a slow computer or a slow internet connection
+DELAY 3000
+REM --------------- OPEN TERMINAL ---------------
+GUI SPACE
+STRING Terminal
+DELAY 500
+ENTER
+DELAY 1000
+REM --------------- GO TO HOME DIRECTORY ---------------
+STRING cd
+ENTER
+DELAY 100
+REM --------------- DOWNLOAD ---------------
+STRING curl -O http://img1.gtsstatic.com/wallpapers/3fea1154de2c3c2fe6a325c56618c5f2_large.jpeg
+ENTER
+DELAY 1500
+REM --------------- COPY TO DESKTOP ---------------
+STRING cp 3fea1154de2c3c2fe6a325c56618c5f2_large.jpeg Desktop/
+ENTER
+REM --------------- CHANGE DESKTOP ---------------
+DELAY 200
+STRING osascript << EOF
+ENTER
+STRING tell application "Finder"
+ENTER
+STRING set desktop picture to file "3fea1154de2c3c2fe6a325c56618c5f2_large.jpeg" of desktop
+ENTER
+STRING end tell
+ENTER
+STRING EOF
+ENTER
+DELAY 100
+REM --------------- CLEANUP ---------------
+STRING rm 3fea1154de2c3c2fe6a325c56618c5f2_large.jpeg
+ENTER
+STRING cd Desktop/
+ENTER
+STRING rm 3fea1154de2c3c2fe6a325c56618c5f2_large.jpeg
+ENTER
+DELAY 100
+STRING cd
+ENTER
+DELAY 50
+STRING history -c
+ENTER
+GUI w
+DELAY 100
+GUI q
